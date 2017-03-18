@@ -24,7 +24,7 @@ public abstract class DatabaseConfig {
     }
 }
 
-@Configuration
+/*@Configuration
 @Profile("heroku")
 class HerokuDatabaseConfig extends DatabaseConfig {
 
@@ -45,7 +45,7 @@ class HerokuDatabaseConfig extends DatabaseConfig {
 
         return dataSource;
     }
-}
+}*/
 
 @Configuration
 @Profile("local")
@@ -78,8 +78,8 @@ class LocalDatabaseConfig extends DatabaseConfig {
 }
 
 @Configuration
-@Profile("heroku2")
-class HerokuDatabaseConfig2 extends DatabaseConfig {
+@Profile("heroku")
+class HerokuDatabaseConfig extends DatabaseConfig {
 
     @Value("${spring.datasource.url}")
     private String url;
