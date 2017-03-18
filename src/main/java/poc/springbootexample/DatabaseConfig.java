@@ -77,3 +77,33 @@ class LocalDatabaseConfig extends DatabaseConfig {
     }
 }
 
+@Configuration
+@Profile("heroku2")
+class HerokuDatabaseConfig2 extends DatabaseConfig {
+
+    @Value("${spring.datasource.url}")
+    private String url;
+
+    @Value("${spring.datasource.username}")
+    private String username;
+
+    @Value("${spring.datasource.password}")
+    private String password;
+
+
+    @Bean
+    public DataSource dataSource() throws URISyntaxException {
+        org.apache.tomcat.jdbc.pool.DataSource dataSource = new org.apache.tomcat.jdbc.pool.DataSource();
+
+        URI dbUri = new URI("");
+
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
+        dataSource.setUrl(url);
+
+        configureDataSource(dataSource);
+
+        return dataSource;
+    }
+}
+
