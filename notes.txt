@@ -1,0 +1,1 @@
+1. If you want heroku to build the app, you can only deploy master

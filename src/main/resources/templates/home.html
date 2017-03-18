@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Users</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+</head>
+
+<body>
+
+
+<span th:if="${model.msg != ''}">
+    <div class="alert" th:classappend="${model.msg.type == 'true'}? alert-success : alert-danger" th:text="${model.msg.val}">
+    </div>
+</span>
+
+
+<div>
+<h1>Users List</h1>
+
+<table class="table">
+    <tr>
+        <th>Num</th>
+        <th>Username</th>
+        <th>Email</th>
+    </tr>
+    <tr th:each="user : ${model.users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.email}"></td>
+    </tr>
+</table>
+
+    <br></br>
+
+    <button type="button" onclick="location.href='./addUser';">Add user</button>
+</div>
+</body>
+
+</html>
