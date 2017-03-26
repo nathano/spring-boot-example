@@ -4,38 +4,64 @@
 <head>
     <meta charset="UTF-8" />
     <title>Users</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.2.0/css/bootstrap.min.css"/>
 </head>
 
 <body>
+<!--
+<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Home</a>
 
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>-->
 
 <span th:if="${model.msg != ''}">
     <div class="alert" th:classappend="${model.msg.type == 'true'}? alert-success : alert-danger" th:text="${model.msg.val}">
     </div>
 </span>
 
+<!--TODO: delete function when you select checkbox and press delete-->
 
-<div>
-<h1>Users List</h1>
-
-<table class="table">
-    <tr>
-        <th>Num</th>
-        <th>Username</th>
-        <th>Email</th>
-    </tr>
-    <tr th:each="user : ${model.users}">
-        <td th:text="${user.id}"></td>
-        <td th:text="${user.name}"></td>
-        <td th:text="${user.email}"></td>
-    </tr>
-</table>
+<div class="container">
+<h3>Users List</h3>
+    <table class="table">
+        <tr>
+            <th>Num</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Group</th>
+            <th></th>
+        </tr>
+        <tr th:each="user : ${model.users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.role.name}"></td>
+            <th><input type="checkbox" name="id" th:value="${user.id}"></input></th>
+        </tr>
+    </table>
 
     <br></br>
-
-    <button type="button" onclick="location.href='./addUser';">Add user</button>
+    <button class="btn btn-secondary" type="button" onclick="location.href='./addUser';">Add user</button>
 </div>
+
 </body>
 
 </html>

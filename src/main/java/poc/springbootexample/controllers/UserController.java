@@ -2,10 +2,10 @@ package poc.springbootexample.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import poc.springbootexample.config.Role;
 import poc.springbootexample.models.User;
 import poc.springbootexample.models.UserDao;
 
@@ -22,10 +22,10 @@ public class UserController {
 
     @RequestMapping("/create")
     @ResponseBody
-    public ModelAndView create(String email, String name) {
+    public ModelAndView create(String email, String name, Role roleVal) {
         String userId = "";
         try {
-            User user = new User(email, name);
+            User user = new User(email, name, roleVal);
             userDao.save(user);
             userId = String.valueOf(user.getId());
         } catch (Exception e) {
