@@ -39,19 +39,7 @@ public class IndexController {
         Map<String, Object> model = new HashMap<String, Object>();
         Map<String, String> msgMap = new HashMap<>();
         if (msg != null) {
-            if (msg.equals("0")) {
-                msg = "Successfully added user";
-                msgMap.put("val", msg);
-                msgMap.put("type", "true");
-            } else {
-                msg = "Failed to add user";
-                msgMap.put("val", msg);
-                msgMap.put("type", "false");
-            }
-
-            model.put("msg", msgMap);
-        } else {
-            model.put("msg", "");
+            model.put("msg", msg);
         }
 
         Iterable<User> users = userDao.findAll();
@@ -64,8 +52,12 @@ public class IndexController {
     }
 
     @RequestMapping("/addUser")
-    public ModelAndView addUser() {
+    public ModelAndView addUser(@RequestParam(value = "msg", required = false) String msg) {
         Map<String, Object> model = new HashMap<String, Object>();
+
+        if (msg != null) {
+            model.put("msg", msg);
+        }
 
         Iterable<Group> groups = groupDao.findAll();
         model.put("groups", groups);

@@ -28,7 +28,7 @@ public class User implements Serializable {
     @Column(name = "ROLE")
     private Role role;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "GROUP_ID")
     private Group group;
 

@@ -32,8 +32,10 @@
     </div>
 </nav>-->
 
-<span th:if="${model.msg != ''}">
-    <div class="alert" th:classappend="${model.msg.type == 'true'}? alert-success : alert-danger" th:text="${model.msg.val}">
+<span th:if="${model.containsKey('msg') and model['msg'] != ''}">
+    <div class="alert"
+         th:classappend="${#strings.containsIgnoreCase(model.msg,'successfully')}? alert-success : alert-danger"
+         th:text="${model.msg}">
     </div>
 </span>
 
@@ -41,51 +43,61 @@
 
 <div class="container">
 <h3>Users List</h3>
-    <table class="table">
-        <tr>
-            <th>Num</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Group</th>
-            <th></th>
-        </tr>
-        <tr th:each="user : ${model.users}">
-            <td th:text="${user.id}"></td>
-            <td th:text="${user.name}"></td>
-            <td th:text="${user.email}"></td>
-            <td th:text="${user.role.name}"></td>
-            <td th:text="${user.group.groupName}"></td>
-            <th><input type="checkbox" name="id" th:value="${user.id}"></input></th>
-        </tr>
-    </table>
+    <form action="/deleteUser">
+        <table class="table">
+            <tr>
+                <th>Num</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Group</th>
+                <th></th>
+            </tr>
+            <tr th:each="user : ${model.users}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.role.name}"></td>
+                <td th:text="${user.group.groupName}"></td>
+                <td><input type="radio" th:name="userId" th:value="${user.id}"></input></td>
+            </tr>
+        </table>
 
-    <br></br>
-    <button class="btn btn-secondary" type="button" onclick="location.href='./addUser';">Add user</button>
+        <br></br>
+        <button class="btn btn-secondary" type="button" onclick="location.href='./addUser';">Add user</button>
+        <input class="btn btn-secondary" type="submit" value="Delete selected user"></input>
+    </form>
+
 </div>
 <br></br>
 <br></br>
 <div class="container">
     <h3>Groups Available</h3>
-    <table class="table">
-        <tr>
-            <th>Group Name</th>
-            <th>Users in Group</th>
-        </tr>
-        <tr th:each="group : ${model.groups}">
-            <td th:text="${group.groupName}"></td>
-            <td>
-                <ul>
-                    <li th:each="user : ${group.users}"
-                        th:text="${user.name}"
-                    ></li>
-                </ul>
-            </td>
-        </tr>
-    </table>
+    <form action="/deleteGroup">
+        <table class="table">
+            <tr>
+                <th>Group Name</th>
+                <th>Users in Group</th>
+                <th></th>
+            </tr>
+            <tr th:each="group : ${model.groups}">
+                <td th:text="${group.groupName}"></td>
+                <td>
+                    <ul>
+                        <li th:each="user : ${group.users}"
+                            th:text="${user.name}"
+                        ></li>
+                    </ul>
+                </td>
+                <td><input type="radio" name="groupId" th:value="${group.id}"></input></td>
+            </tr>
+        </table>
 
-    <br></br>
-    <button class="btn btn-secondary" type="button" onclick="location.href='./addGroup';">Add group</button>
+        <br></br>
+        <button class="btn btn-secondary" type="button" onclick="location.href='./addGroup';">Add group</button>
+        <input class="btn btn-secondary" type="submit" value="Delete selected group"></input>
+    </form>
+
 </div>
 
 </body>

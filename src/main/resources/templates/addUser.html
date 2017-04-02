@@ -8,6 +8,12 @@
 </head>
 
 <body>
+
+<span th:if="${model.containsKey('msg')}">
+    <div class="alert alert-danger" th:text="${model.msg}">
+    </div>
+</span>
+
 <div class="container">
 <h3>Add a User</h3>
 
