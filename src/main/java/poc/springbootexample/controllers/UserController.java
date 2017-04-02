@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import poc.springbootexample.config.Role;
+import poc.springbootexample.models.Group;
+import poc.springbootexample.models.GroupDao;
 import poc.springbootexample.models.User;
 import poc.springbootexample.models.UserDao;
 
@@ -19,13 +21,17 @@ public class UserController {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private GroupDao groupDao;
+
 
     @RequestMapping("/create")
     @ResponseBody
-    public ModelAndView create(String email, String name, Role roleVal) {
+    public ModelAndView create(String email, String name, Role roleVal, Long groupVal) {
         String userId = "";
+        Group groupFound = groupDao.findOne(groupVal);
         try {
-            User user = new User(email, name, roleVal);
+            User user = new User(email, name, roleVal, groupFound);
             userDao.save(user);
             userId = String.valueOf(user.getId());
         } catch (Exception e) {
@@ -34,6 +40,14 @@ public class UserController {
         }
         String msg = "0";
         return new ModelAndView("redirect:/","msg",msg);
+    }
+
+    @RequestMapping("/createGroup")
+    @ResponseBody
+    public ModelAndView createGroup(String groupName) {
+        Group group = new Group(groupName);
+        groupDao.save(group);
+        return new ModelAndView("redirect:/");
     }
 
     /**

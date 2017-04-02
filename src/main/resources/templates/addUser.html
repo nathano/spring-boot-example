@@ -13,15 +13,16 @@
 
     <!--create?email=nathan-orner@hotmail.com&name=nathan-->
     <form action="/create">
-        Name:<br></br>
+        <label>Name:</label><br></br>
         <input type="text" name="name"></input>
         <br></br>
         <br></br>
-        Email:<br></br>
+        <label>Email:</label><br></br>
         <input type="text" name="email"></input>
         <br></br>
         <br></br>
-        Role:<br></br><select name="roleVal">
+        <label>Role:</label><br></br>
+        <select name="roleVal">
             <option th:each="role : ${T(poc.springbootexample.config.Role).values()}"
                     th:value="${role}"
                     th:text="${role.name}">
@@ -29,15 +30,14 @@
         </select>
         <br></br>
         <br></br>
-        <label>Group:</label>
-        <ul>
-            <li>
-                <input  th:each="group : ${groupSet}"
-                        type="checkbox"
-                        th:value="${group}"
-                        th:text="${group.groupName}"></input>
-            </li>
-        </ul>
+        <label>Group:</label><br></br>
+
+        <select name="groupVal">
+            <option th:each="group : ${model.groups}"
+                    th:value="${group.id}"
+                    th:text="${group.groupName}">
+            </option>
+        </select>
         <br></br>
         <br></br>
         <br></br>

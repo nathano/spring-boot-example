@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Add Group</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.2.0/css/bootstrap.min.css"/>
+</head>
+
+<body>
+<div class="container">
+<h3>Add a Group</h3>
+
+    <form action="/createGroup">
+        Group Name:<br></br>
+        <input type="text" name="groupName"></input>
+        <br></br>
+        <br></br>
+        <input class="btn btn-secondary" type="submit" value="Add Group"></input>
+    </form>
+
+</div>
+</body>
+
+</html>

@@ -37,7 +37,7 @@
     </div>
 </span>
 
-<!--TODO: delete function when you select checkbox and press delete-->
+<!--TODO: make a delete function when you select checkbox and press delete-->
 
 <div class="container">
 <h3>Users List</h3>
@@ -46,6 +46,7 @@
             <th>Num</th>
             <th>Username</th>
             <th>Email</th>
+            <th>Role</th>
             <th>Group</th>
             <th></th>
         </tr>
@@ -54,12 +55,37 @@
             <td th:text="${user.name}"></td>
             <td th:text="${user.email}"></td>
             <td th:text="${user.role.name}"></td>
+            <td th:text="${user.group.groupName}"></td>
             <th><input type="checkbox" name="id" th:value="${user.id}"></input></th>
         </tr>
     </table>
 
     <br></br>
     <button class="btn btn-secondary" type="button" onclick="location.href='./addUser';">Add user</button>
+</div>
+<br></br>
+<br></br>
+<div class="container">
+    <h3>Groups Available</h3>
+    <table class="table">
+        <tr>
+            <th>Group Name</th>
+            <th>Users in Group</th>
+        </tr>
+        <tr th:each="group : ${model.groups}">
+            <td th:text="${group.groupName}"></td>
+            <td>
+                <ul>
+                    <li th:each="user : ${group.users}"
+                        th:text="${user.name}"
+                    ></li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <br></br>
+    <button class="btn btn-secondary" type="button" onclick="location.href='./addGroup';">Add group</button>
 </div>
 
 </body>

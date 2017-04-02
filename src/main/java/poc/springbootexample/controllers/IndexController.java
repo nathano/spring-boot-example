@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import poc.springbootexample.models.Group;
+import poc.springbootexample.models.GroupDao;
 import poc.springbootexample.models.User;
 import poc.springbootexample.models.UserDao;
 
@@ -28,6 +30,9 @@ public class IndexController {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private GroupDao groupDao;
 
     @RequestMapping("/")
     public ModelAndView home(@RequestParam(value = "msg", required = false) String msg) {
@@ -52,12 +57,25 @@ public class IndexController {
         Iterable<User> users = userDao.findAll();
         model.put("users", users);
 
+        Iterable<Group> groups = groupDao.findAll();
+        model.put("groups", groups);
+
         return new ModelAndView("home","model",model);
     }
 
     @RequestMapping("/addUser")
-    public String addUser() {
-        return "addUser";
+    public ModelAndView addUser() {
+        Map<String, Object> model = new HashMap<String, Object>();
+
+        Iterable<Group> groups = groupDao.findAll();
+        model.put("groups", groups);
+
+        return new ModelAndView("addUser","model",model);
+    }
+
+    @RequestMapping("/addGroup")
+    public ModelAndView addGroup() {
+        return new ModelAndView("addGroup");
     }
 
     private static Connection getConnection() throws URISyntaxException, SQLException {

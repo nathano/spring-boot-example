@@ -3,6 +3,7 @@ package poc.springbootexample.models;
 import poc.springbootexample.config.Role;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -11,24 +12,25 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "USER_ID", nullable = false)
+    @Column(name = "USER_ID")
     private long id;
 
-    @Column(name = "EMAIL", nullable = false)
+    @Column(name = "EMAIL")
     private String email;
 
-    @Column(name = "NAME", nullable = false)
+    @Column(name = "NAME")
     private String name;
 
-    @Column(name = "ROLE", nullable = false)
+    @Column(name = "ROLE")
     private Role role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Group> groups;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "GROUP_ID")
+    private Group group;
 
 
     //TODO - play with jpa/hibernate annotations incl. cascading deletes
@@ -43,10 +45,11 @@ public class User {
         this.id = id;
     }
 
-    public User(String email, String name, Role role) {
+    public User(String email, String name, Role role, Group group) {
         this.email = email;
         this.name = name;
         this.role = role;
+        this.group = group;
     }
 
     public long getId() {
@@ -81,11 +84,11 @@ public class User {
         this.role = role;
     }
 
-    public Set<Group> getGroups() {
-        return groups;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setGroups(Set<Group> groups) {
-        this.groups = groups;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 }

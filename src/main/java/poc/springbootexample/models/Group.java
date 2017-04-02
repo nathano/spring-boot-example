@@ -3,6 +3,8 @@ package poc.springbootexample.models;
 import poc.springbootexample.config.Role;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Set;
 
 /**
  * Created by norner on 11/03/2017.
@@ -10,19 +12,18 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "groups")
-public class Group {
+public class Group implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "GROUP_ID", nullable = false)
+    @Column(name = "GROUP_ID")
     private long id;
 
-    @Column(name = "GROUP_NAME", nullable = false)
+    @Column(name = "GROUP_NAME")
     private String groupName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID", nullable = false)
-    private User user;
+    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<User> users;
 
     public Group() {}
 
@@ -50,11 +51,11 @@ public class Group {
         this.groupName = groupName;
     }
 
-    public User getUser() {
-        return user;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }
