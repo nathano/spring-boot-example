@@ -27,6 +27,7 @@ import java.util.Map;
 
 @Controller
 public class IndexController {
+    //for navigation to different page
 
     @Autowired
     private UserDao userDao;
@@ -66,8 +67,14 @@ public class IndexController {
     }
 
     @RequestMapping("/addGroup")
-    public ModelAndView addGroup() {
-        return new ModelAndView("addGroup");
+    public ModelAndView addGroup(@RequestParam(value = "msg", required = false) String msg) {
+        Map<String, Object> model = new HashMap<String, Object>();
+
+        if (msg != null) {
+            model.put("msg", msg);
+        }
+
+        return new ModelAndView("addGroup", "model", model);
     }
 
     private static Connection getConnection() throws URISyntaxException, SQLException {

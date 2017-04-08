@@ -4,15 +4,17 @@
 <head>
     <meta charset="UTF-8" />
     <title>Add Group</title>
-    <link rel="stylesheet" href="/webjars/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <span th:include="layout::bootstrap"></span>
 </head>
 
 <body>
+<div th:include="layout::topPage"></div>
+
 <div class="container">
 <h3>Add a Group</h3>
 
     <form action="/createGroup">
-        <label>Group Name:</label>
+        <label>Group Name*</label>
         <br></br>
         <input type="text" name="groupName"></input>
         <br></br>

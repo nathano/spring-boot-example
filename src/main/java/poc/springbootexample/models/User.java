@@ -4,6 +4,7 @@ import poc.springbootexample.config.Role;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -12,6 +13,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE) //default single table per class - maps subclasses to base class table
+//can also have joined - table per class/subclass - abstract and concrete classes get their own table
+//can also have TABLE_PER_CLASS - which is a table per concrete class (not abstract)
 public class User implements Serializable {
 
     @Id
@@ -29,15 +33,26 @@ public class User implements Serializable {
     private Role role;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "GROUP_ID")
+    @JoinColumn(name = "GROUP_ID")  //indicates that foreign key is help by group_id (in group class)
     private Group group;
 
+    @Version
+    @Column(name = "version")
+    private long version;
 
     //TODO - play with jpa/hibernate annotations incl. cascading deletes
     //eg. add group (note that group is a reserved keyword )
     //if you delete a group, you delete all users from that group
     //one to many - groups to users
     //users can have many groups - bonus task
+
+    //navigation bar with different pages testing out different joins: TODO: many to many and one to one
+    //TODO:
+    //@MapsId
+    //@JoinTable
+    //@OneToOne
+    //@ManyToMany
+    //@PrimaryKeyJoinColumn
 
     public User() {}
 
@@ -90,5 +105,13 @@ public class User implements Serializable {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 }

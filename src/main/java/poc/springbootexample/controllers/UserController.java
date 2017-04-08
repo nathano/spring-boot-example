@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import poc.springbootexample.config.Role;
-import poc.springbootexample.models.Group;
-import poc.springbootexample.models.GroupDao;
-import poc.springbootexample.models.User;
-import poc.springbootexample.models.UserDao;
+import poc.springbootexample.models.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -35,6 +32,9 @@ public class UserController {
         if (groupVal == null) {
             return new ModelAndView("redirect:/addUser", "msg", "Please select a group");
         }
+        if (name.isEmpty()) {
+            return new ModelAndView("redirect:/addUser", "msg", "Please enter a name");
+        }
         Group foundGroup = groupDao.findOne(groupVal);
         User user = new User(email, name, roleVal, foundGroup);
         try {
@@ -44,20 +44,6 @@ public class UserController {
             return new ModelAndView("/","msg",msg);
         }
         String msg = "Successfully added user: " + user.getName();
-        return new ModelAndView("redirect:/","msg",msg);
-    }
-
-    @RequestMapping("/createGroup")
-    @ResponseBody
-    public ModelAndView createGroup(String groupName) {
-        Group group = new Group(groupName);
-        try {
-            groupDao.save(group);
-        } catch (Exception ex) {
-            String msg = "Failed to add group";
-            return new ModelAndView("/","msg",msg);
-        }
-        String msg = "Successfully added group: " + group.getGroupName();
         return new ModelAndView("redirect:/","msg",msg);
     }
 
@@ -77,21 +63,6 @@ public class UserController {
         }
 
         return new ModelAndView("redirect:/","msg","User successfully deleted");
-    }
-
-    @RequestMapping("/deleteGroup")
-    @ResponseBody
-    public ModelAndView deleteGroup(Long groupId) {
-        if (groupId == null) { return new ModelAndView("redirect:/","msg","Please select a group"); }
-
-        try {
-            groupDao.delete(groupId);
-        } catch (Exception ex) {
-            System.out.println("Exception: " + ex.toString());
-            return new ModelAndView("redirect:/","msg","Failed to delete group");
-        }
-
-        return new ModelAndView("redirect:/","msg","Group successfully deleted");
     }
 
     /**

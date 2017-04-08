@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Page</title>
+    <span th:fragment="bootstrap">
+        <link rel="stylesheet" href="/webjars/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    </span>
+</head>
+
+<body>
+    <div th:fragment="topPage">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <a class="navbar-brand">App</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="/">One to Many <span class="sr-only">(current)</span></a></li>
+                        <li class="active"><a href="#">One to One <span class="sr-only">(current)</span></a></li>
+                        <li class="active"><a href="#">Many to Many <span class="sr-only">(current)</span></a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
+        <span th:if="${model.containsKey('msg') and model['msg'] != ''}">
+    <div class="alert"
+         th:classappend="${#strings.containsIgnoreCase(model.msg,'successfully')}? alert-success : alert-danger"
+         th:text="${model.msg}">
+    </div>
+</span>
+    </div>
+</body>
+
+</html>

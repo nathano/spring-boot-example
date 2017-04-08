@@ -4,61 +4,32 @@
 <head>
     <meta charset="UTF-8" />
     <title>Users</title>
-    <link rel="stylesheet" href="/webjars/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <span th:include="layout::bootstrap"></span>
 </head>
 
 <body>
-<!--
-<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="#">Home</a>
-
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
-        </ul>
-    </div>
-</nav>-->
-
-<span th:if="${model.containsKey('msg') and model['msg'] != ''}">
-    <div class="alert"
-         th:classappend="${#strings.containsIgnoreCase(model.msg,'successfully')}? alert-success : alert-danger"
-         th:text="${model.msg}">
-    </div>
-</span>
-
-<!--TODO: make a delete function when you select checkbox and press delete-->
+<div th:include="layout::topPage"></div>
 
 <div class="container">
 <h3>Users List</h3>
     <form action="/deleteUser">
         <table class="table">
             <tr>
-                <th>Num</th>
+              <!--  <th>Id</th>-->
                 <th>Username</th>
                 <th>Email</th>
                 <th>Role</th>
                 <th>Group</th>
+                <!--<th>Version Num</th>-->
                 <th></th>
             </tr>
             <tr th:each="user : ${model.users}">
-                <td th:text="${user.id}"></td>
+               <!-- <td th:text="${user.id}"></td>-->
                 <td th:text="${user.name}"></td>
                 <td th:text="${user.email}"></td>
                 <td th:text="${user.role.name}"></td>
                 <td th:text="${user.group.groupName}"></td>
+                <!--<td th:text="${user.version}"></td>-->
                 <td><input type="radio" th:name="userId" th:value="${user.id}"></input></td>
             </tr>
         </table>
@@ -77,11 +48,13 @@
         <table class="table">
             <tr>
                 <th>Group Name</th>
+                <th>Group Type</th>
                 <th>Users in Group</th>
                 <th></th>
             </tr>
             <tr th:each="group : ${model.groups}">
                 <td th:text="${group.groupName}"></td>
+                <td th:text="${group.groupType}"></td>
                 <td>
                     <ul>
                         <li th:each="user : ${group.users}"
