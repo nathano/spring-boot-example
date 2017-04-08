@@ -1,4 +1,4 @@
-package poc.springbootexample.models;
+package poc.springbootexample.models.User;
 
 import org.springframework.data.repository.CrudRepository;
 

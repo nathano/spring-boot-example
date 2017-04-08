@@ -1,11 +1,10 @@
-package poc.springbootexample.models;
+package poc.springbootexample.models.User;
 
 import poc.springbootexample.config.Role;
+import poc.springbootexample.models.Group.Group;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Set;
 
 /**
  * Created by norner on 11/03/2017.
@@ -45,6 +44,13 @@ public class User implements Serializable {
     //if you delete a group, you delete all users from that group
     //one to many - groups to users
     //users can have many groups - bonus task
+
+
+    //@Transient - not serialised - ie not persisted to the db - if semantics are different
+    //@OrderBy("firstName asc") - orders a collection - better to just do it in the query
+    //@Lob - for annotating large objects - eg. images
+
+    //@PrimaryKeyJoinColumn - used in uni directional one to one when the two share the same primary key. the second entity's id doesn't need a generatedvalue
 
     //navigation bar with different pages testing out different joins: TODO: many to many and one to one
     //TODO:

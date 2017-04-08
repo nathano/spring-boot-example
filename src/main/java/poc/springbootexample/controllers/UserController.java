@@ -2,15 +2,14 @@ package poc.springbootexample.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import poc.springbootexample.config.Role;
-import poc.springbootexample.models.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
+import poc.springbootexample.models.Group.Group;
+import poc.springbootexample.models.Group.GroupDao;
+import poc.springbootexample.models.User.User;
+import poc.springbootexample.models.User.UserDao;
 
 /**
  * Created by norner on 11/03/2017.

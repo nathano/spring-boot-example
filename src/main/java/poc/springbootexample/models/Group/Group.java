@@ -1,6 +1,7 @@
-package poc.springbootexample.models;
+package poc.springbootexample.models.Group;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import poc.springbootexample.models.User.User;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,11 +18,6 @@ import java.util.Set;
         @NamedQuery(name = "Group.findGroup", query = "SELECT group FROM Group group WHERE group.id = :id")
 })
 public class Group implements Serializable {
-
-    //@Transient - not serialised - ie not persisted to the db - if semantics are different
-    //@OrderBy("firstName asc") - orders a collection - better to just do it in the query
-    //@Lob - for annotating large objects - eg. images
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

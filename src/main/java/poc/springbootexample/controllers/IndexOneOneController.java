@@ -1,14 +1,15 @@
 package poc.springbootexample.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import poc.springbootexample.models.Group.Group;
-import poc.springbootexample.models.Group.GroupDao;
-import poc.springbootexample.models.User.User;
-import poc.springbootexample.models.User.UserDao;
+import poc.springbootexample.models.Group.GroupOneOne;
+import poc.springbootexample.models.Group.GroupOneOneDao;
+import poc.springbootexample.models.User.UserOneOne;
+import poc.springbootexample.models.User.UserOneOneDao;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -23,16 +24,15 @@ import java.util.Map;
  */
 
 @Controller
-public class IndexController {
-    //for navigation to different page
+public class IndexOneOneController {
 
     @Autowired
-    private UserDao userDao;
+    private UserOneOneDao userDao;
 
     @Autowired
-    private GroupDao groupDao;
+    private GroupOneOneDao groupDao;
 
-    @RequestMapping("/")
+    @RequestMapping("/OneToOne")
     public ModelAndView home(@RequestParam(value = "msg", required = false) String msg) {
         Map<String, Object> model = new HashMap<String, Object>();
         Map<String, String> msgMap = new HashMap<>();
@@ -40,16 +40,28 @@ public class IndexController {
             model.put("msg", msg);
         }
 
-        Iterable<User> users = userDao.findAll();
+        Iterable<UserOneOne> users = null;
+        try {
+            users = userDao.findAll();
+        } catch (JpaSystemException e) {
+            System.out.println("exception: " + e);
+            model.replace("msg","Error: More than one user has been added to the same group");
+        }
         model.put("users", users);
 
-        Iterable<Group> groups = groupDao.findAll();
+        Iterable<GroupOneOne> groups = null;
+        try {
+            groups = groupDao.findAll();
+        } catch (JpaSystemException e) {
+            System.out.println("exception: " + e);
+            model.replace("msg","Error: More than one user has been added to the same group");
+        }
         model.put("groups", groups);
 
-        return new ModelAndView("home","model",model);
+        return new ModelAndView("homeOneOne","model",model);
     }
 
-    @RequestMapping("/addUser")
+    @RequestMapping("/addUserOneToOne")
     public ModelAndView addUser(@RequestParam(value = "msg", required = false) String msg) {
         Map<String, Object> model = new HashMap<String, Object>();
 
@@ -57,13 +69,13 @@ public class IndexController {
             model.put("msg", msg);
         }
 
-        Iterable<Group> groups = groupDao.findAll();
+        Iterable<GroupOneOne> groups = groupDao.findAll();
         model.put("groups", groups);
 
-        return new ModelAndView("addUser","model",model);
+        return new ModelAndView("addUserOneToOne","model",model);
     }
 
-    @RequestMapping("/addGroup")
+    @RequestMapping("/addGroupOneToOne")
     public ModelAndView addGroup(@RequestParam(value = "msg", required = false) String msg) {
         Map<String, Object> model = new HashMap<String, Object>();
 
@@ -71,20 +83,7 @@ public class IndexController {
             model.put("msg", msg);
         }
 
-        return new ModelAndView("addGroup", "model", model);
+        return new ModelAndView("addGroupOneToOne", "model", model);
     }
-
-    private static Connection getConnection() throws URISyntaxException, SQLException {
-        URI dbUri = new URI(System.getenv("DATABASE_URL"));
-        String username = dbUri.getUserInfo().split(":")[0];
-        String password = dbUri.getUserInfo().split(":")[1];
-        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':'
-                + dbUri.getPort() + dbUri.getPath()
-                + "?sslmode=require";
-
-        return DriverManager.getConnection(dbUrl, username, password);
-    }
-
-
 
 }

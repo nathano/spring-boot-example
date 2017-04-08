@@ -1,8 +1,6 @@
-package poc.springbootexample.models;
+package poc.springbootexample.models.Group;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Set;
 
 /**
  * Created by norner on 11/03/2017.

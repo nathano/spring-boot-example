@@ -5,8 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import poc.springbootexample.config.Role;
-import poc.springbootexample.models.*;
+import poc.springbootexample.models.Group.AdminGroup;
+import poc.springbootexample.models.Group.Group;
+import poc.springbootexample.models.Group.GroupDao;
 
 /**
  * Created by norner on 11/03/2017.

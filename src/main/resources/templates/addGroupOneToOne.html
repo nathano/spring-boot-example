@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Add Group</title>
+    <span th:include="layout::bootstrap"></span>
+</head>
+
+<body>
+<div th:include="layout::topPage"></div>
+
+<div class="container">
+<h3>Add a Group</h3>
+
+    <form action="/createGroupOneToOne">
+        <label>Group Name*</label>
+        <br></br>
+        <input type="text" name="groupName"></input>
+        <br></br>
+        <br></br>
+        <input class="btn btn-secondary" type="submit" value="Add Group"></input>
+    </form>
+
+</div>
+</body>
+
+</html>
