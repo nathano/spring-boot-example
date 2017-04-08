@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Add User (Many to Many)</title>
+    <span th:include="layout::bootstrap"></span>
+</head>
+
+<body>
+
+<div th:include="layout::topPage"></div>
+
+<div class="container">
+<h3>Add a User (Many to Many)</h3>
+
+    <!--create?email=nathan-orner@hotmail.com&name=nathan-->
+    <form action="/createManyToMany">
+        <label>Name*</label><br></br>
+        <input type="text" name="name"></input>
+        <br></br>
+        <br></br>
+        <label>Email</label><br></br>
+        <input type="text" name="email"></input>
+        <br></br>
+        <br></br>
+        <label>Role</label><br></br>
+        <select name="roleVal">
+            <option th:each="role : ${T(poc.springbootexample.config.Role).values()}"
+                    th:value="${role}"
+                    th:text="${role.name}">
+            </option>
+        </select>
+        <br></br>
+        <br></br>
+        <label>Group*</label><br></br>
+        <select name="groupVal">
+            <option th:each="group : ${model.groups}"
+                    th:value="${group.id}"
+                    th:text="${group.groupName}">
+            </option>
+        </select>
+        <br></br>
+        <br></br>
+        <br></br>
+        <input class="btn btn-secondary" type="submit" value="Submit"></input>
+    </form>
+
+
+</div>
+</body>
+
+</html>

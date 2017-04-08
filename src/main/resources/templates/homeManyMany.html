@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Users (Many to Many)</title>
+    <span th:include="layout::bootstrap"></span>
+</head>
+
+<body>
+<div th:include="layout::topPage"></div>
+
+<div class="container">
+<h3>Users List (Many to Many)</h3>
+    <form action="/deleteUserManyToMany">
+        <table class="table">
+            <tr>
+              <!--  <th>Id</th>-->
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Group</th>
+                <!--<th>Version Num</th>-->
+                <th></th>
+            </tr>
+            <tr th:each="user : ${model.users}">
+               <!-- <td th:text="${user.id}"></td>-->
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.role.name}"></td>
+                <td th:text="${user.group.groupName}"></td>
+                <!--<td th:text="${user.version}"></td>-->
+                <td><input type="radio" th:name="userId" th:value="${user.id}"></input></td>
+            </tr>
+        </table>
+
+        <br></br>
+        <button class="btn btn-secondary" type="button" onclick="location.href='./addUserManyToMany';">Add user</button>
+        <input class="btn btn-secondary" type="submit" value="Delete selected user"></input>
+    </form>
+
+</div>
+<br></br>
+<br></br>
+<div class="container">
+    <h3>Groups Available (Many to Many)</h3>
+    <form action="/deleteGroupManyToMany">
+        <table class="table">
+            <tr>
+                <th>Group Name</th>
+                <th>Users in Group</th>
+                <th></th>
+            </tr>
+            <tr th:each="group : ${model.groups}">
+                <td th:text="${group.groupName}"></td>
+               <!-- <td th:if="${group.user != null}" th:text="${group.user.name}"></td>
+                <td th:if="${group.user == null}"></td>-->
+                <td><input type="radio" name="groupId" th:value="${group.id}"></input></td>
+            </tr>
+        </table>
+
+        <br></br>
+        <button class="btn btn-secondary" type="button" onclick="location.href='./addGroupManyToMany';">Add group</button>
+        <input class="btn btn-secondary" type="submit" value="Delete selected group"></input>
+    </form>
+
+</div>
+
+</body>
+
+</html>
