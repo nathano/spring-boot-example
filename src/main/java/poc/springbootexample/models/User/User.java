@@ -46,19 +46,18 @@ public class User implements Serializable {
     //users can have many groups - bonus task
 
 
+    //@Version - used for tracking updations. for 1,2,3,3 updates or for timestamps when updating
     //@Transient - not serialised - ie not persisted to the db - if semantics are different
     //@OrderBy("firstName asc") - orders a collection - better to just do it in the query
     //@Lob - for annotating large objects - eg. images
-
     //@PrimaryKeyJoinColumn - used in uni directional one to one when the two share the same primary key. the second entity's id doesn't need a generatedvalue
 
     //navigation bar with different pages testing out different joins: TODO: many to many and one to one
     //TODO:
     //@MapsId
     //@JoinTable
-    //@OneToOne
     //@ManyToMany
-    //@PrimaryKeyJoinColumn
+    //@JsonIgnore - what does this do??
 
     public User() {}
 

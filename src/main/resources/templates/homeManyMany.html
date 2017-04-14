@@ -19,7 +19,7 @@
                 <th>Username</th>
                 <th>Email</th>
                 <th>Role</th>
-                <th>Group</th>
+                <th>Associated Groups</th>
                 <!--<th>Version Num</th>-->
                 <th></th>
             </tr>
@@ -28,7 +28,13 @@
                 <td th:text="${user.name}"></td>
                 <td th:text="${user.email}"></td>
                 <td th:text="${user.role.name}"></td>
-                <td th:text="${user.group.groupName}"></td>
+                <td>
+                    <ul>
+                        <li th:each="group : ${user.groups}"
+                            th:text="${group.groupName}"
+                        ></li>
+                    </ul>
+                </td>
                 <!--<td th:text="${user.version}"></td>-->
                 <td><input type="radio" th:name="userId" th:value="${user.id}"></input></td>
             </tr>
@@ -53,8 +59,13 @@
             </tr>
             <tr th:each="group : ${model.groups}">
                 <td th:text="${group.groupName}"></td>
-               <!-- <td th:if="${group.user != null}" th:text="${group.user.name}"></td>
-                <td th:if="${group.user == null}"></td>-->
+                <td>
+                    <ul>
+                        <li th:each="user : ${group.users}"
+                            th:text="${user.name}"
+                        ></li>
+                    </ul>
+                </td>
                 <td><input type="radio" name="groupId" th:value="${group.id}"></input></td>
             </tr>
         </table>

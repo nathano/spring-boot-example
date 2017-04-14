@@ -65,6 +65,9 @@ public class IndexManyManyController {
             model.put("msg", msg);
         }
 
+        Iterable<UserManyMany> users = userDao.findAll();
+        model.put("users", users);
+
         return new ModelAndView("addGroupManyToMany", "model", model);
     }
 

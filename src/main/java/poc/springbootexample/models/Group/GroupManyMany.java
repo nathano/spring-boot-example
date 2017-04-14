@@ -5,6 +5,7 @@ import poc.springbootexample.models.User.UserManyMany;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -23,11 +24,10 @@ public class GroupManyMany implements Serializable {
     @Column(name = "GROUP_NAME")
     private String groupName;
 
-    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<UserManyMany> users;
+    @ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL)
+    private Set<UserManyMany> users = new HashSet<>();
 
     @Column(name = "GROUP_TYPE", insertable = false, updatable = false)
-    @JsonIgnore
     private String groupType;
 
     public GroupManyMany() {}

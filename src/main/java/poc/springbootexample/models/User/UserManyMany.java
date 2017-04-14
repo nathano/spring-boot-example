@@ -5,13 +5,16 @@ import poc.springbootexample.models.Group.GroupManyMany;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by norner on 11/03/2017.
  */
 
 @Entity
-@Table(name = "usersManyMany")
+@Table(name = "usersManyMany",uniqueConstraints = {
+        @UniqueConstraint(columnNames = "NAME")})
 public class UserManyMany implements Serializable {
 
     @Id
@@ -22,15 +25,19 @@ public class UserManyMany implements Serializable {
     @Column(name = "EMAIL")
     private String email;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", unique = true)
     private String name;
 
     @Column(name = "ROLE")
     private Role role;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "GROUP_ID")  //indicates that foreign key is help by group_id (in group class)
-    private GroupManyMany group;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "USER_GROUP", joinColumns = {
+            @JoinColumn(name = "USER_ID")
+    }, inverseJoinColumns = {
+            @JoinColumn(name = "GROUP_ID")
+    })
+    private Set<GroupManyMany> groups = new HashSet<>();
 
     @Version
     @Column(name = "version")
@@ -42,11 +49,10 @@ public class UserManyMany implements Serializable {
         this.id = id;
     }
 
-    public UserManyMany(String email, String name, Role role, GroupManyMany group) {
+    public UserManyMany(String email, String name, Role role) {
         this.email = email;
         this.name = name;
         this.role = role;
-        this.group = group;
     }
 
     public long getId() {
@@ -89,11 +95,11 @@ public class UserManyMany implements Serializable {
         this.version = version;
     }
 
-    public GroupManyMany getGroup() {
-        return group;
+    public Set<GroupManyMany> getGroups() {
+        return groups;
     }
 
-    public void setGroup(GroupManyMany group) {
-        this.group = group;
+    public void setGroups(Set<GroupManyMany> groups) {
+        this.groups = groups;
     }
 }

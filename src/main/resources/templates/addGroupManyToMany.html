@@ -19,6 +19,15 @@
         <input type="text" name="groupName"></input>
         <br></br>
         <br></br>
+        <span th:if="${!#lists.isEmpty(model.users)}">
+            <label>Users</label><br></br>
+            <div th:each="user : ${model.users}">
+                <input type="checkbox" th:name="userVal" th:value="${user.id}"/>
+                <label th:text="${user.name}"/>
+            </div>
+        </span>
+        <br></br>
+        <br></br>
         <input class="btn btn-secondary" type="submit" value="Add Group"></input>
     </form>
 

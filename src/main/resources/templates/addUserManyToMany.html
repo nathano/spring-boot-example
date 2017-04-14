@@ -15,7 +15,7 @@
 <h3>Add a User (Many to Many)</h3>
 
     <!--create?email=nathan-orner@hotmail.com&name=nathan-->
-    <form action="/createManyToMany">
+    <form action="/createManyToMany" th:object="${form}">
         <label>Name*</label><br></br>
         <input type="text" name="name"></input>
         <br></br>
@@ -33,13 +33,15 @@
         </select>
         <br></br>
         <br></br>
-        <label>Group*</label><br></br>
-        <select name="groupVal">
-            <option th:each="group : ${model.groups}"
-                    th:value="${group.id}"
-                    th:text="${group.groupName}">
-            </option>
-        </select>
+        <span th:if="${!#lists.isEmpty(model.groups)}">
+            <label>Groups</label><br></br>
+            <!--only list groups that user isn't a part of yet-->
+            <!--th:if="${#lists.contains(permission.permRoles, allRoles[0])}"-->
+            <div th:each="group : ${model.groups}">
+                <input type="checkbox" th:name="groupVal" th:value="${group.id}"/>
+                <label th:text="${group.groupName}"/>
+            </div>
+        </span>
         <br></br>
         <br></br>
         <br></br>
